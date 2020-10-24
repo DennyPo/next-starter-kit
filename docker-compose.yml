@@ -1,0 +1,12 @@
+version: "2.0"
+
+services:
+  frontend:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    volumes:
+      - ./src:/frontend/src
+    stdin_open: true
+    ports:
+      - "3000:3000"
