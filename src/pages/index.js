@@ -3,6 +3,14 @@ import Head from 'next/head'
 import { useDispatch } from "react-redux";
 
 export default function Home() {
+
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    dispatch({type: "HELLO_SAGA"});
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
