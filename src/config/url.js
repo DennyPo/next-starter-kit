@@ -8,4 +8,9 @@ export const USER_URL = "/user";
 
 // Routes
 
-export const WITHOUT_TOKEN_ROUTE = "/signin";
+export const SIGNIN_PAGE = "/signin";
+export const HOME_PAGE = "/";
+
+export const FREE_PAGES = [
+  SIGNIN_PAGE
+];

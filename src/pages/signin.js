@@ -1,5 +1,8 @@
 import { Formik } from "formik";
 import { connect } from "react-redux";
+import { useEffect } from "react";
+import { Router } from "next/router";
+import _ from "lodash";
 
 // components
 
@@ -25,96 +28,101 @@ import { validate } from "../validation/signin"
 
 import { loginRequest } from "../store/actions/authActions";
 
+// utils
+
+import authUtil from "../utils/authUtil";
+
+export const getServerSideProps = async ctx => authUtil(ctx);
 
 function Signin(props) {
 
   const submitHandler = values => props.loginRequest(values);
 
   return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={styles.paper}>
-          <Avatar className={styles.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Formik
-            initialValues={{
-              email: "",
-              password: "",
-              remember: false
-            }}
-            onSubmit={submitHandler}
-            validate={validate}
-            validateOnChange={false}
-          >
-            {({
-                values,
-                errors,
-                handleSubmit,
-                handleChange
-            }) => (
-              <form className={styles.form} onSubmit={handleSubmit}>
-                <TextField
-                    value={values.email}
-                    onChange={handleChange}
-                    error={!!errors.email}
-                    helperText={errors.email}
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                />
-                <TextField
-                    value={values.password}
-                    onChange={handleChange}
-                    error={!!errors.password}
-                    helperText={errors.password}
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                />
-                <FormControlLabel
-                    control={
-                      <Checkbox
-                          checked={values.remember}
-                          onChange={handleChange}
-                          name="remember"
-                          color="primary"
-                      />
-                    }
-                    label="Remember me"
-                />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={styles.submit}
-                >
-                  Sign In
-                </Button>
-              </form>
-            )}
-          </Formik>
-        </div>
-      </Container>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={styles.paper}>
+        <Avatar className={styles.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+            remember: false
+          }}
+          onSubmit={submitHandler}
+          validate={validate}
+          validateOnChange={false}
+        >
+          {({
+              values,
+              errors,
+              handleSubmit,
+              handleChange
+          }) => (
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <TextField
+                  value={values.email}
+                  onChange={handleChange}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+              />
+              <TextField
+                  value={values.password}
+                  onChange={handleChange}
+                  error={!!errors.password}
+                  helperText={errors.password}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+              />
+              <FormControlLabel
+                  control={
+                    <Checkbox
+                        checked={values.remember}
+                        onChange={handleChange}
+                        name="remember"
+                        color="primary"
+                    />
+                  }
+                  label="Remember me"
+              />
+              <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={styles.submit}
+              >
+                Sign In
+              </Button>
+            </form>
+          )}
+        </Formik>
+      </div>
+    </Container>
   );
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.user
+  currentUser: state.user.currentUser
 });
 
 export default connect(mapStateToProps, { loginRequest })(Signin);

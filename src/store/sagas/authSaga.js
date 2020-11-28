@@ -1,36 +1,29 @@
 import { call, takeLeading, put } from "redux-saga/effects";
 import cookies from "js-cookie";
+import Router from "next/router";
 
 import { LOGIN, loginSuccess } from "../actions/authActions";
-import { fetcher } from "../../utils/fetcher";
-import { SIGNING_URL } from "../../config/url";
 import actionHelper from "../../utils/actionHelper";
+import { signinApi } from "../../../api/auth";
+import { HOME_PAGE } from "../../config/url";
 
 function* login(action) {
-  const {
-    email,
-    password,
-    remember
-  } = action.payload;
-
-  const params = {
-    method: "POST",
-    payload: { email, password }
-  }
 
   try {
-    const { user, token } = yield call(fetcher, SIGNING_URL, params);
+    const { user, token } = yield call(signinApi, action.payload);
 
     if (token) {
       cookies.set('Authorization', token);
-    }
 
-    yield put(loginSuccess(user));
+      yield put(loginSuccess(user));
+
+      Router.push(HOME_PAGE);
+    }
 
   } catch (e) {
 
   }
-};
+}
 
 export default function* authSaga() {
   yield takeLeading(actionHelper(LOGIN), login);
