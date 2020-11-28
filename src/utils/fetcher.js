@@ -1,7 +1,7 @@
 import { API } from "../config/url";
 import cookies from "js-cookie";
 
-export const fetcher = async (url, { method, payload }) => {
+export const fetcher = async (url, { method, Authorization, payload } = {}) => {
 
     const params = {
         method: method || "GET",
@@ -11,7 +11,7 @@ export const fetcher = async (url, { method, payload }) => {
         body: JSON.stringify(payload)
     };
 
-    const token = cookies.get("Authorization");
+    const token = Authorization || cookies.get("Authorization");
 
     if (token) {
         params.headers.Authorization = token;

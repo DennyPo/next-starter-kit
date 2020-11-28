@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 // components
 
@@ -113,4 +113,8 @@ function Signin(props) {
   );
 }
 
-export default connect(null, { loginRequest })(Signin);
+const mapStateToProps = state => ({
+  currentUser: state.user
+});
+
+export default connect(mapStateToProps, { loginRequest })(Signin);
