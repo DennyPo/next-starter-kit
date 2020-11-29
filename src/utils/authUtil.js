@@ -6,9 +6,10 @@ import { fetcher } from "./fetcher";
 import wrapper from "../store";
 import actionHelper from "./actionHelper";
 import { LOGIN } from "../store/actions/authActions";
+import { TOKEN_NAME } from "../config/config";
 
 const authUtil = wrapper.getServerSideProps(async (ctx, props = {}) => {
-  const { Authorization } = getCookies(ctx);
+  const authorization = getCookies(ctx)[TOKEN_NAME];
 
   const redirect = {
     redirect: {
@@ -17,13 +18,13 @@ const authUtil = wrapper.getServerSideProps(async (ctx, props = {}) => {
     }
   }
 
-  const isFreePage = FREE_PAGES.includes(ctx.req.url);
+  const isFreePage = FREE_PAGES.some(page => ctx.req.url.includes(page));
 
-  if (!Authorization && !isFreePage) return redirect;
+  if (!authorization && !isFreePage) return redirect;
 
-  if (_.isEmpty(ctx.store.getState().user.currentUser) && Authorization) {
+  if (_.isEmpty(ctx.store.getState().user.currentUser) && authorization) {
 
-    const { user } = await fetcher(USER_URL, { Authorization });
+    const { user } = await fetcher(USER_URL, { authorization });
 
     if (!user) return redirect;
 

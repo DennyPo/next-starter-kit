@@ -1,23 +1,25 @@
 import actionHelper from "../../utils/actionHelper";
-import { LOGIN } from "../actions/authActions";
+import { LOGIN, LOGOUT } from "../actions/authActions";
 
 const defaultState = {
   currentUser: {}
 };
 
  const userReducer = (state = defaultState, action) => {
-    switch (action.type) {
+  switch (action.type) {
 
-        case actionHelper(LOGIN, true):
+    case actionHelper(LOGIN, true):
+      return {
+        ...state,
+        currentUser: action.payload
+      }
 
-            return {
-                ...state,
-                currentUser: action.payload
-            }
+    case actionHelper(LOGOUT, true):
+      return defaultState;
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 };
 
 export default userReducer;

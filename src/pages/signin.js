@@ -1,8 +1,5 @@
 import { Formik } from "formik";
 import { connect } from "react-redux";
-import { useEffect } from "react";
-import { Router } from "next/router";
-import _ from "lodash";
 
 // components
 
