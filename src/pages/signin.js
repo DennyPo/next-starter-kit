@@ -1,5 +1,6 @@
 import { Formik } from "formik";
 import { connect } from "react-redux";
+import Router from "next/router";
 
 // components
 
@@ -29,11 +30,17 @@ import { loginRequest } from "../store/actions/authActions";
 
 import authUtil from "../utils/authUtil";
 
+// config
+
+import { HOME_PAGE } from "../config/url";
+
 export const getServerSideProps = async ctx => authUtil(ctx);
 
 function Signin(props) {
 
-  const submitHandler = values => props.loginRequest(values);
+  const submitHandler = values => {
+    props.loginRequest(values, () => Router.push(HOME_PAGE));
+  }
 
   return (
     <Container component="main" maxWidth="xs">

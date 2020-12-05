@@ -8,9 +8,10 @@ export const LOGOUT = "LOGOUT";
 
 // actions
 
-export const loginRequest = payload => ({
+export const loginRequest = (payload, onSuccess) => ({
     type: actionHelper(LOGIN),
-    payload
+    payload,
+    onSuccess
 });
 
 export const loginSuccess = payload => ({
@@ -18,8 +19,9 @@ export const loginSuccess = payload => ({
     payload
 });
 
-export const logoutRequest = () => ({
-    type: actionHelper(LOGOUT)
+export const logoutRequest = (onSuccess) => ({
+    type: actionHelper(LOGOUT),
+    onSuccess
 });
 
 export const logoutSuccess = () => ({

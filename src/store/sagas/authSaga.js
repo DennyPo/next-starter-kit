@@ -1,11 +1,9 @@
 import { call, takeLeading, put } from "redux-saga/effects";
 import cookies from "js-cookie";
-import Router from "next/router";
 
 import { LOGIN, loginSuccess, LOGOUT, logoutSuccess } from "../actions/authActions";
 import actionHelper from "../../utils/actionHelper";
 import { signinApi } from "../../../api/auth";
-import { HOME_PAGE, SIGNIN_PAGE } from "../../config/url";
 import { TOKEN_NAME } from "../../config/config";
 
 function* login(action) {
@@ -17,8 +15,7 @@ function* login(action) {
       cookies.set(TOKEN_NAME, token);
 
       yield put(loginSuccess(user));
-
-      Router.push(HOME_PAGE);
+      action.onSuccess();
     }
 
   } catch (e) {
@@ -26,12 +23,12 @@ function* login(action) {
   }
 }
 
-function* logout() {
+function* logout(action) {
   cookies.remove(TOKEN_NAME);
 
   yield put(logoutSuccess());
 
-  Router.replace(SIGNIN_PAGE);
+  action.onSuccess();
 }
 
 export default function* authSaga() {

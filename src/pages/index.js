@@ -2,6 +2,7 @@ import authUtil from "../utils/authUtil";
 import { AppBar, Toolbar, IconButton, Typography, Button } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import { connect } from "react-redux";
+import Router from "next/router";
 
 // styles
 
@@ -10,6 +11,10 @@ import styles from '../styles/Home.module.scss';
 // actions
 
 import { logoutRequest } from "../store/actions/authActions";
+
+// config
+
+import { SIGNIN_PAGE } from "../config/url";
 
 export const getServerSideProps = async ctx => authUtil(ctx);
 
@@ -28,7 +33,7 @@ function Home(props) {
         </Typography>
         <Button
             color="inherit"
-            onClick={logoutRequest}
+            onClick={() => logoutRequest(() => Router.push(SIGNIN_PAGE))}
         >
           Logout
         </Button>
