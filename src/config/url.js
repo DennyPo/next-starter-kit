@@ -10,6 +10,7 @@ export const USER_URL = "/user";
 
 export const SIGNIN_PAGE = "/signin";
 export const HOME_PAGE = "/";
+export const PROFILE_PAGE = "/profile";
 
 export const FREE_PAGES = [
   SIGNIN_PAGE

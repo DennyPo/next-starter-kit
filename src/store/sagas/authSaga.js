@@ -23,12 +23,10 @@ function* login(action) {
   }
 }
 
-function* logout(action) {
+function* logout() {
   cookies.remove(TOKEN_NAME);
 
   yield put(logoutSuccess());
-
-  action.onSuccess();
 }
 
 export default function* authSaga() {

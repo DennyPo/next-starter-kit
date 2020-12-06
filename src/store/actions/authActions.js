@@ -19,9 +19,8 @@ export const loginSuccess = payload => ({
     payload
 });
 
-export const logoutRequest = (onSuccess) => ({
-    type: actionHelper(LOGOUT),
-    onSuccess
+export const logoutRequest = () => ({
+    type: actionHelper(LOGOUT)
 });
 
 export const logoutSuccess = () => ({

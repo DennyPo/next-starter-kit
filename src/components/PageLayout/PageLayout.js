@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { connect } from "react-redux";
+import _ from "lodash";
 
 import {
   AppBar,
-  Button,
   Drawer,
   IconButton,
   List,
@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import Router from "next/router";
-import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 // Actions
 
@@ -55,14 +55,8 @@ const PageLayout = (props) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={styles.title}>
-              {`${currentUser.name} ${currentUser.lastName}`}
+              {!_.isEmpty(currentUser) && `${currentUser.name} ${currentUser.lastName}`}
             </Typography>
-            <Button
-                color="inherit"
-                onClick={() => logoutRequest(() => Router.push(SIGNIN_PAGE))}
-            >
-              Logout
-            </Button>
           </Toolbar>
         </AppBar>
 
@@ -73,8 +67,12 @@ const PageLayout = (props) => {
             paper: styles.sidebar
           }}
         >
-          <List>
-            {MENU_PAGES.map(({ text, link }) => (
+          <List
+            classes={{
+              root: styles.list
+            }}
+          >
+            {MENU_PAGES.map(({ text, link, Icon }) => (
               <ListItem
                 button
                 key={text}
@@ -87,12 +85,27 @@ const PageLayout = (props) => {
                 }}
               >
                 <ListItemIcon classes={{ root: styles.listItemIcon }}>
-                  <HomeIcon />
+                  <Icon />
                 </ListItemIcon>
                 <ListItemText classes={{ root: styles.listItemText }} primary={text} />
               </ListItem>
             ))}
           </List>
+          <ListItem
+              button
+              classes={{
+                root: styles.listItem
+              }}
+              onClick={() => {
+                Router.push(SIGNIN_PAGE);
+                logoutRequest();
+              }}
+          >
+            <ListItemIcon classes={{ root: styles.listItemIcon }}>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText classes={{ root: styles.listItemText }} primary='Logout' />
+          </ListItem>
         </Drawer>
 
         {children}

@@ -7,6 +7,10 @@
 .sidebar {
   padding: 20px 0;
 
+  .list {
+    flex: 1 1;
+  }
+
   .listItem {
     padding: 10px 70px 10px 30px;
     align-items: center;
