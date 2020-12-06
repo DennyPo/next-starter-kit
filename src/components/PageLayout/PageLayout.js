@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
+import { useRouter } from "next/router";
 
 import {
   AppBar,
+  Button,
   Drawer,
   IconButton,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography
 } from "@material-ui/core";
@@ -38,9 +42,14 @@ const PageLayout = (props) => {
 
   const { children, currentUser, logoutRequest } = props;
 
+  const router = useRouter();
+
   const [isSideBar, setIsSideBar] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const onToggleSideBar = () => setIsSideBar(state => !state);
+
+  const handleCloseLocales = () => setAnchorEl(null);
 
   return (
       <>
@@ -57,6 +66,32 @@ const PageLayout = (props) => {
             <Typography variant="h6" className={styles.title}>
               {!_.isEmpty(currentUser) && `${currentUser.name} ${currentUser.lastName}`}
             </Typography>
+            <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={e => setAnchorEl(e.currentTarget)}
+                color='inherit'
+            >
+              {router.locale}
+            </Button>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={anchorEl}
+                onClose={handleCloseLocales}
+            >
+              {router.locales.map(locale => (
+                <MenuItem
+                  onClick={() => {
+                    router.push(router.pathname, router.pathname, { locale });
+                    handleCloseLocales();
+                  }}
+                >
+                  {_.toUpper(locale)}
+                </MenuItem>
+              ))}
+            </Menu>
           </Toolbar>
         </AppBar>
 
