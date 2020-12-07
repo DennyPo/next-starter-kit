@@ -1,6 +1,5 @@
+const { locales, defaultLocale } = require('./i18n.json')
+
 module.exports = {
-  i18n: {
-    locales: ['en', 'ru'],
-    defaultLocale: 'en',
-  },
+  i18n: { locales, defaultLocale },
 }

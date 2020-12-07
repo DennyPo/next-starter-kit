@@ -2,6 +2,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { useRouter } from "next/router";
+import useTranslation from 'next-translate/useTranslation'
 
 import {
   AppBar,
@@ -43,6 +44,7 @@ const PageLayout = (props) => {
   const { children, currentUser, logoutRequest } = props;
 
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [isSideBar, setIsSideBar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -78,7 +80,7 @@ const PageLayout = (props) => {
                 id="simple-menu"
                 anchorEl={anchorEl}
                 keepMounted
-                open={anchorEl}
+                open={!!anchorEl}
                 onClose={handleCloseLocales}
             >
               {router.locales.map(locale => (
@@ -107,7 +109,7 @@ const PageLayout = (props) => {
               root: styles.list
             }}
           >
-            {MENU_PAGES.map(({ text, link, Icon }) => (
+            {MENU_PAGES(t).map(({ text, link, Icon }) => (
               <ListItem
                 button
                 key={text}
@@ -139,7 +141,7 @@ const PageLayout = (props) => {
             <ListItemIcon classes={{ root: styles.listItemIcon }}>
               <ExitToAppIcon />
             </ListItemIcon>
-            <ListItemText classes={{ root: styles.listItemText }} primary='Logout' />
+            <ListItemText classes={{ root: styles.listItemText }} primary={t('logout')} />
           </ListItem>
         </Drawer>
 

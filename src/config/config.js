@@ -5,7 +5,7 @@ import PersonIcon from '@material-ui/icons/Person';
 
 export const TOKEN_NAME = 'starter_token';
 
-export const MENU_PAGES = [
-  { text: "Home", link: HOME_PAGE, Icon: HomeIcon },
-  { text: "Profile", link: PROFILE_PAGE, Icon: PersonIcon },
-];
+export const MENU_PAGES = t => ([
+  { text: t('home'), link: HOME_PAGE, Icon: HomeIcon },
+  { text: t('profile'), link: PROFILE_PAGE, Icon: PersonIcon },
+]);
