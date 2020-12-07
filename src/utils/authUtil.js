@@ -18,7 +18,7 @@ const authUtil = wrapper.getServerSideProps(async (ctx, props = {}) => {
     }
   }
 
-  const isFreePage = FREE_PAGES.some(page => ctx.req.url.includes(page));
+  const isFreePage = FREE_PAGES.some(page => page === ctx.resolvedUrl);
 
   if (!authorization && !isFreePage) return redirect;
 
