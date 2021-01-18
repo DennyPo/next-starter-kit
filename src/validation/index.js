@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import ajvErrors from 'ajv-errors';
+import _ from 'lodash';
 
 export const ajv = new Ajv({ allErrors: true, jsonPointers: true });
 ajvErrors(ajv);
@@ -7,13 +8,13 @@ ajvErrors(ajv);
 export const createErrors = validate => data => {
   validate(data);
 
-  const errors = {};
+  let errors = {};
 
   if (validate.errors) {
     for (const error of validate.errors) {
-      const path = error.dataPath.replace(/\//g, '.').slice(1);
+      const path = error.dataPath.slice(1).split('/');
 
-      errors[path] = error.message;
+      errors = _.set(errors, path, error.message);
     }
   }
 
