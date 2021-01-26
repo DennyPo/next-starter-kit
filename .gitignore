@@ -32,3 +32,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# ide
+.idea
+
+# pages
+/src/pages
